@@ -14,6 +14,7 @@
 #define LOWER 1
 #define RAISE 2
 #define ADJUST 3
+#define GAME 4
 
 / {
 
@@ -71,13 +72,13 @@
         raise_layer {
             display-name = "raise";
 // ------------------------------------------------------------------------------------------------------------
-// | BTCLR | BT1  | BT2  |  BT3  |  BT4  |  BT5 |                |      |      |       |      |       |       |
+// | BTCLR | BT1  | BT2  |  BT3  |  BT4  |  BT5 |                | GAME |      |       |      |       |       |
 // |       | INS  | PSCR | GUI   |       |      |                | PGUP |      |   ^   |      |       |       |
 // |       | ALT  | CTRL | SHIFT |       | CAPS |                | PGDN |   <- |   v   |  ->  |  DEL  | BKSPC |
 // |       | UNDO | CUT  | COPY  | PASTE |      |      |  |      |      |      |       |      |       |       |
 //                |      |       |       |      |      |  |      |      |      |       |      |
             bindings = <
-&bt BT_CLR &bt BT_SEL 0 &bt BT_SEL 1 &bt BT_SEL 2 &bt BT_SEL 3 &bt BT_SEL 4                  &trans    &trans    &trans   &trans    &trans  &trans
+&bt BT_CLR &bt BT_SEL 0 &bt BT_SEL 1 &bt BT_SEL 2 &bt BT_SEL 3 &bt BT_SEL 4                  &tog GAME &trans    &trans   &trans    &trans  &trans
 &trans     &kp INS      &kp PSCRN    &kp K_CMENU  &trans       &trans                        &kp PG_UP &trans    &kp UP   &trans    &kp N0  &trans
 &trans     &kp LALT     &kp LCTRL    &kp LSHFT    &trans       &kp CLCK                      &kp PG_DN &kp LEFT  &kp DOWN &kp RIGHT &kp DEL &kp BSPC
 &trans     &kp K_UNDO   &kp K_CUT    &kp K_COPY   &kp K_PASTE  &trans        &trans  &trans  &trans    &trans    &trans   &trans    &trans  &trans
@@ -105,4 +106,25 @@
         };
 
     };
+
+        default_layer {
+            display-name = "game";
+// ------------------------------------------------------------------------------------------------------------
+// |  `  |   1   |  2  |  3  |  4   |  5   |                   |  6   |  7    |  8    |  9   |   0   |       |
+// |  T  |  ESC  |  Q  |  W  |  E   |  R   |                   |  Y   |  U    |  I    |  O   |   P   | BKSPC |
+// |  G  |  TAB  |  A  |  S  |  D   |  F   |                   |  H   |  J    |  K    |  L   |   ;   |   '   |
+// |  B  | SHIFT |  Z  |  X  |  C   |  V   |  MUTE  |  |       |  N   |  M    |  ,    |  .   |   /   | SHIFT |
+//               | GUI | ALT  | CTRL | LOWER|  ENTER |  | SPACE | RAISE| CTRL  | ALT   | GUI  |
+            bindings = <
+&kp GRAVE  &kp N1   &kp N2  &kp N3  &kp N4  &kp N5                         &kp N6  &kp N7  &kp N8  &kp N9  &kp N0  &none
+&kp T      &kp ESC  &kp Q   &kp W   &kp E   &kp R                          &trans  &trans  &trans  &trans  &trans  &trans
+&kp G      &kp TAB  &kp A   &kp S   &kp D   &kp F                          &trans  &trans  &trans  &trans  &trans  &trans
+&kp LSHFT  &kp Z    &kp X   &kp C   &kp V   &kp B      &trans  &trans      &trans  &trans  &trans  &trans  &trans  &trans
+           &trans  &trans  &trans  &trans  &trans                          &trans  &trans  &trans  &trans  &trans
+            >;
+
+            sensor-bindings = <&inc_dec_kp C_VOL_UP C_VOL_DN &inc_dec_kp PG_UP PG_DN>;
+        };
+
+
 };
